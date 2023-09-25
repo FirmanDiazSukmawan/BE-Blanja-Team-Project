@@ -1,33 +1,34 @@
 const {
-  getSellerM,
+  getCustomerM,
   selectPagination,
   pagination,
-  getSellerId,
-  getSellerEmail,
-  createSellerM,
-  loginSellerM,
-  updateSellerM,
-  deleteSellerM,
-} = require("../model/sellerModel");
+  getCustomerId,
+  getCustomerEmail,
+  createCustomerM,
+  loginCustomerM,
+  updateCustomerM,
+  deleteCustomerM,
+} = require("../model/customerModel");
+
 const { generateToken, refreshToken } = require("../helper/jwt");
 const bcrypt = require("bcrypt");
 const cloudinary = require("../config/cloudinaryConfig");
-// const redis = require("../config/redisConfig");
 
-const sellerController = {
-  getSeller: async (req, res) => {
+const customerController = {
+  getCustomer: async (req, res) => {
     let search = req.query.search || "";
     let sort = req.query.sort || "ASC";
     try {
-      let result = await getSellerM(search, sort);
+      let result = await getCustomerM(search, sort);
+      console.log(result);
       res.status(200).json({
-        message: "get Seller successfully",
+        message: "get customer successfully",
         data: result.rows,
       });
     } catch (err) {
       res.status(400).json({
         error: err.message,
-        message: "error getting Seller ",
+        message: "error getting customer ",
       });
     }
   },
@@ -39,7 +40,6 @@ const sellerController = {
     const offsetValue = pageValue === 1 ? 0 : (pageValue - 1) * limitValue;
     const allData = await selectPagination();
     const totalData = Number(allData.rows[0].total);
-
     try {
       let result = await pagination(limitValue, offsetValue);
       res.status(200).json({
@@ -57,10 +57,10 @@ const sellerController = {
     }
   },
 
-  getSellerById: async (req, res) => {
+  getCustomerById: async (req, res) => {
     try {
-      const seller_id = req.params.seller_id;
-      const result = await getSellerId(seller_id);
+      const customer_id = req.params.customer_id;
+      const result = await getCustomerId(customer_id);
       res.json({
         data: result.rows[0],
         message: "get data successfully",
@@ -72,12 +72,11 @@ const sellerController = {
       });
     }
   },
-
-  createSeller: async (req, res) => {
+  createCustomer: async (req, res) => {
     try {
-      const { name, email, phone, password, store_name } = req.body;
+      const { name, email, password } = req.body;
 
-      let { rowCount } = await getSellerEmail(email);
+      let { rowCount } = await getCustomerEmail(email);
       if (rowCount) {
         return res
           .status(400)
@@ -90,56 +89,49 @@ const sellerController = {
             error: err.message,
           });
         }
-
         const user = {
           name,
           email,
-          phone,
           password: hash,
-          store_name,
         };
         console.log(user);
 
         try {
-          const userData = await createSellerM(user);
-          // console.log("User data:", userData);
+          const userData = await createCustomerM(user);
           res.status(200).json({
-            message: "Seller has been created successfully",
+            message: "Customer has been created successfully",
             data: userData,
           });
         } catch (err) {
-          console.error("Error creating sellerr:", err);
+          console.error("Error creating Customer:", err);
           res.status(400).json({
-            message: "Error creating sellerr",
+            message: "Error creating Customer",
             err: err.message,
           });
         }
       });
     } catch (err) {
       res.status(400).json({
-        message: "Error creating seller Catch",
+        message: "Error creating customer Catch",
         err: err.message,
       });
     }
   },
 
-  loginSeller: async (req, res) => {
+  loginCustomer: async (req, res) => {
     const { email, password } = req.body;
 
     try {
-      const result = await loginSellerM(email);
-      //   console.log(result.rows);
+      const result = await loginCustomerM(email);
 
       if (result.rowCount > 0) {
         const passwordHash = result.rows[0].password;
         const PasswordValid = await bcrypt.compare(password, passwordHash);
         const user = result.rows[0];
 
-        // console.log(result);
-
         if (PasswordValid) {
           const token = await generateToken({
-            seller: user,
+            customer: user,
           });
 
           return res.status(200).json({
@@ -158,24 +150,26 @@ const sellerController = {
     }
   },
 
-  updateSeller: async (req, res) => {
+  updateCustomer: async (req, res) => {
     try {
-      const seller_id = req.params.seller_id;
+      const customer_id = req.params.customer_id;
       // console.log(req);
-      const sellerImage = await cloudinary.uploader.upload(req.file.path, {
-        folder: "seller",
+      const customerImage = await cloudinary.uploader.upload(req.file.path, {
+        folder: "customer",
       });
-      const result = await getSellerId(Number(seller_id));
+      const result = await getCustomerId(Number(customer_id));
+      console.log(result);
       const user = result.rows[0];
       const data = {
-        store_name: req.body.store_name ?? user.store_name,
+        name: req.body.name ?? user.name,
         email: req.body.email ?? user.email,
-        phone: req.body.phone ?? user.phone,
-        store_description: req.body.store_description ?? user.store_description,
-        image: sellerImage.secure_url ?? null,
+        phone_number: req.body.phone_number ?? user.phone_number,
+        gender: req.body.gender ?? user.gender,
+        birthday: req.body.birthday ?? user.birthday,
+        image: customerImage.secure_url ?? user.image,
       };
 
-      await updateSellerM(data, Number(seller_id));
+      await updateCustomerM(data, Number(customer_id));
 
       res.status(200).json({
         message: "Update Successfull",
@@ -188,10 +182,10 @@ const sellerController = {
     }
   },
 
-  deleteSeller: async (req, res) => {
+  deleteCustomer: async (req, res) => {
     try {
-      const seller_id = req.params.seller_id;
-      const result = await deleteSellerM(seller_id);
+      const customer_id = req.params.customer_id;
+      const result = await deleteCustomerM(customer_id);
       const data = await cloudinary.uploader.destroy(result);
       res.json({
         message: "delete data sucessfully",
@@ -206,4 +200,4 @@ const sellerController = {
   },
 };
 
-module.exports = sellerController;
+module.exports = customerController;
