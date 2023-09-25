@@ -20,7 +20,7 @@ const customerController = {
     let sort = req.query.sort || "ASC";
     try {
       let result = await getCustomerM(search, sort);
-      console.log(result);
+      // console.log(result);
       res.status(200).json({
         message: "get customer successfully",
         data: result.rows,
@@ -94,7 +94,7 @@ const customerController = {
           email,
           password: hash,
         };
-        console.log(user);
+        // console.log(user);
 
         try {
           const userData = await createCustomerM(user);
@@ -123,11 +123,14 @@ const customerController = {
 
     try {
       const result = await loginCustomerM(email);
+      //   console.log(result.rows);
 
       if (result.rowCount > 0) {
         const passwordHash = result.rows[0].password;
         const PasswordValid = await bcrypt.compare(password, passwordHash);
         const user = result.rows[0];
+
+        // console.log(result);
 
         if (PasswordValid) {
           const token = await generateToken({

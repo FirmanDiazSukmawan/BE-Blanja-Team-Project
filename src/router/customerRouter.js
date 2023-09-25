@@ -1,14 +1,14 @@
 const express = require("express");
 const router = express.Router();
 const {
-    getCustomer,
-    getCustomerById,
-    selectPage,
-    createCustomer,
-    loginCustomer,
-    updateCustomer,
-    deleteCustomer
-  } = require("../controller/customerController");
+  getCustomer,
+  getCustomerById,
+  selectPage,
+  createCustomer,
+  loginCustomer,
+  updateCustomer,
+  deleteCustomer,
+} = require("../controller/customerController");
 const upload = require("../middleware/upload");
 
 router.get("/paginate", selectPage);

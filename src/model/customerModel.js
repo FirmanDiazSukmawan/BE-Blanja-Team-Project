@@ -57,13 +57,10 @@ const createCustomerM = (data) => {
 
 const loginCustomerM = (email) => {
   return new Promise((resolve, reject) => {
-    db.query(
-      `SELECT * FROM customer WHERE customer = '${email}'`,
-      (err, res) => {
-        if (err) return reject(err);
-        resolve(res);
-      }
-    );
+    db.query(`SELECT * FROM customer WHERE email = '${email}'`, (err, res) => {
+      if (err) return reject(err);
+      resolve(res);
+    });
   });
 };
 

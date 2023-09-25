@@ -17,15 +17,15 @@ module.exports = {
   // }
 
   isSeller: (req, res, next) => {
-    if (req?.payload?.users?.role === "seller") {
+    if (req?.payload?.seller?.role === "seller") {
       next();
     } else
       res.json({
-        message: "Halaman hanya bisa di akses oleh Seller",
+        message: "Halaman hanya bisa di akses oleh admin",
       });
   },
   isCustomer: (req, res, next) => {
-    if (req?.payload?.users?.role === "customer") {
+    if (req?.payload?.customer?.role === "customer") {
       next();
     } else
       res.json({
