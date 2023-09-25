@@ -3,6 +3,7 @@ const {
   allProduct,
   getProductId,
   getProductByUsersId,
+  getProductByCategoryId,
   createProductM,
   updateProductM,
   deleteProductM,
@@ -53,7 +54,7 @@ const recipeController = {
     try {
       let result = await getProductId(product_id);
       res.status(200).json({ data: result.rows });
-      console.log(result);
+      // console.log(result);
     } catch (err) {
       res.status(400).json({
         error: err.message,
@@ -67,7 +68,21 @@ const recipeController = {
     try {
       const result = await getProductByUsersId(users_id);
       res.status(200).json({ data: result.rows });
-      console.log(result);
+      // console.log(result);
+    } catch (err) {
+      res.status(400).json({
+        error: err.message,
+        message: "error get product by users",
+      });
+    }
+  },
+
+  getByCategoryId: async (req, res) => {
+    const category_id = req.params.category_id;
+    try {
+      const result = await getProductByCategoryId(category_id);
+      res.status(200).json({ data: result.rows });
+      // console.log(result);
     } catch (err) {
       res.status(400).json({
         error: err.message,
@@ -84,7 +99,7 @@ const recipeController = {
           folder: "product",
         }
       );
-      console.log(productImage);
+      // console.log(productImage);
       if (!productImage) {
         return res.json({ messsage: "need upload image" });
       }
@@ -101,7 +116,7 @@ const recipeController = {
         category_id: req.body.category_id,
       };
       let productData = await createProductM(product);
-      console.log(product);
+      // console.log(product);
       res.status(200).json({
         message: "create product successfully",
         data: productData.rows,

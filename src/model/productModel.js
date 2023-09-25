@@ -42,6 +42,20 @@ WHERE
 `);
 };
 
+const getProductByCategoryId = (category_id) => {
+  return db.query(`SELECT 
+  product.*, 
+  category.name_category
+FROM 
+  product
+LEFT JOIN 
+  category
+ON 
+  product.category_id = category.category_id
+WHERE 
+  product.category_id = ${category_id};`);
+};
+
 const createProductM = (data) => {
   const {
     name_product,
@@ -105,6 +119,7 @@ module.exports = {
   allProduct,
   getProductId,
   getProductByUsersId,
+  getProductByCategoryId,
   createProductM,
   updateProductM,
   deleteProductM,

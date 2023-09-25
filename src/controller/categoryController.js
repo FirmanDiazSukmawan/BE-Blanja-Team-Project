@@ -1,91 +1,119 @@
-// const { readCategory, findCategoryId, createCategory, updateCategory, deleteCategory } = require("../model/categoryModel");
+const {
+  getCategoryM,
+  getCategoryId,
+  createCategoryM,
+  updateCategoryM,
+  deleteCategoryM,
+} = require("../model/categoryModel");
+const cloudinary = require("../config/cloudinaryConfig");
 
-// const categoryController = {
-//     getCategory: async (req, res) => {
-//         try {
-//             let result = await readCategory();
-//             res.json({
-//                 message: "category has been read successfully",
-//                 data: result.rows
-//             });
-//         } catch (err) {
-//             res.json({
-//                 error: err.message,
-//                 message: "error reading category"
-//             });
-//         }
-//     },
+const categoryController = {
+  getCategory: async (req, res) => {
+    let { searchBy, search, sortBy, sort, limit, offset } = req.query;
+    let data = {
+      searchBy: searchBy || "name_category",
+      search: search || "",
+      sortBy: sortBy || "name_category",
+      sort: sort || "ASC",
+      limit: limit || 15,
+      offset: offset || 0,
+    };
+    try {
+      let result = await getCategoryM(data);
+      res.json({
+        message: "get Category successfully ",
+        data: result.rows,
+      });
+    } catch (err) {
+      res.json({
+        error: err.message,
+        message: "error get category",
+      });
+    }
+  },
 
-//     getCategoryById: async (req, res) => {
-//         const id = req.params.id;
-//         let result = await findCategoryId(id);
-//         try {
-//             res.json({
-//                 message: "category has been found",
-//                 data: result.rows
-//             });
+  getCategoryById: async (req, res) => {
+    const category_id = req.params.category_id;
+    let result = await getCategoryId(category_id);
+    try {
+      res.json({
+        message: "category has been found",
+        data: result.rows,
+      });
+    } catch (err) {
+      res.json({
+        error: err.message,
+        message: "error getting category",
+      });
+    }
+  },
 
-//         } catch (err) {
-//             res.json({
-//                 error: err.message,
-//                 message: "error getting category"
-//             });
-//         }
-//     },
-//     createDataCategory: async (req, res) => {
-//         let { name } = req.body;
-//         try {
-//             await createCategory(name);
-//             res.status(201).json({
-//                 message: "category has been created",
-//             });
-//         } catch (err) {
-//             res.status(400).json({
-//                 message: "error creating category",
-//                 error: err.message
-//             });
-//         }
-//     },
+  createCategory: async (req, res) => {
+    try {
+      let categoryImage = await cloudinary.uploader.upload(
+        req.file && req.file?.path,
+        {
+          folder: "product",
+        }
+      );
+      //   console.log(categoryImage);
+      if (!categoryImage) {
+        return res.json({ messsage: "need upload image" });
+      }
+      const category = {
+        name_category: req.body.name_category,
+        image: categoryImage.secure_url,
+      };
+      let categoryData = await createCategoryM(category);
+      //   console.log(category);
+      res.status(200).json({
+        message: "create category successfully",
+        data: categoryData.rows,
+      });
+    } catch (err) {
+      res.status(400).json({
+        err: err.message,
+        message: "error create category",
+      });
+    }
+  },
 
-//     updateDataCategory: async (req, res) => {
+  updateCategory: async (req, res) => {
+    try {
+      let category_id = req.params.category_id;
+      let { name_category } = req.body;
 
-//         try {
-//             let { id } = req.params;
-//             let { name } = req.body;
-//             let data = name;
+      let result = await updateCategoryM(name_category, Number(category_id));
+      //   console.log(result);
+      res.status(202).json({
+        message: "category has been updated",
+        data: result,
+      });
+    } catch (err) {
+      res.status(400).json({
+        error: err.message,
+        message: "error updating category",
+      });
+    }
+  },
 
-//             await updateCategory(data, Number(id));
+  deleteCategory: async (req, res) => {
+    try {
+      let category_id = req.params.category_id;
+      const result = await deleteCategoryM(category_id);
+      const data = await cloudinary.uploader.destroy(result);
 
-//             res.status(202).json({
-//                 message: "category has been updated"
-//             });
-//         } catch (err) {
-//             res.status(400).json({
-//                 error: err.message,
-//                 message: "error updating category"
+      res.status(200).json({
+        message: "product deleted successfully",
+        data: data,
+      });
+    } catch (err) {
+      res.status(400).json({
+        err: err.message,
+        message: "error deleting product",
+      });
+    }
+  },
+};
 
-//             });
-//         }
-//     },
-
-//     deleteDataCategory: async (req, res) => {
-//         let id = req.params.id;
-//         const result = await deleteCategory(id);
-//         try {
-//             await deleteCategory(id);
-//             res.json({
-//                 message: "category has been deleted",
-//                 data: `id${result} has been deleted`
-//             });
-//         } catch (err) {
-//             res.json({
-//                 error: err.message,
-//                 message: "error deleting category"
-//             });
-//         }
-
-//     }
-
-// };
-
-// module.exports = categoryController;
+module.exports = categoryController;

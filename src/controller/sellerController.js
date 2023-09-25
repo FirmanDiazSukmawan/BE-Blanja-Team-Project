@@ -172,7 +172,7 @@ const sellerController = {
         email: req.body.email ?? user.email,
         phone: req.body.phone ?? user.phone,
         store_description: req.body.store_description ?? user.store_description,
-        image: sellerImage.secure_url ?? null,
+        image: sellerImage.secure_url ?? user.image,
       };
 
       await updateSellerM(data, Number(seller_id));
