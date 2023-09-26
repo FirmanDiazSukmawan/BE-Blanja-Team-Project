@@ -77,6 +77,9 @@ const sellerController = {
     try {
       const { name, email, phone, password, store_name } = req.body;
 
+      if (!name || !email || !phone || !password || !store_name) {
+        return res.status(400).json({ message: "Semua kolom harus diisi" });
+      }
       let { rowCount } = await getSellerEmail(email);
       if (rowCount) {
         return res

@@ -75,6 +75,16 @@ const addresController = {
         city: req.body.city,
         users_id: req.body.users_id,
       };
+      if (
+        !addres.home_addres ||
+        !addres.recipients_name ||
+        !addres.phone ||
+        !addres.addres ||
+        !addres.postal_code ||
+        !addres.city
+      ) {
+        return res.status(400).json({ message: "Semua kolom harus diisi" });
+      }
       let addresData = await createAddresM(addres);
       console.log(addres);
       res.status(200).json({

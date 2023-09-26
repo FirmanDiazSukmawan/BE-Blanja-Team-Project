@@ -64,6 +64,10 @@ const categoryController = {
         name_category: req.body.name_category,
         image: categoryImage.secure_url,
       };
+      if (!category.name_category || !category.image) {
+        return res.status(400).json({ message: "Semua kolom harus diisi" });
+      }
+
       let categoryData = await createCategoryM(category);
       //   console.log(category);
       res.status(200).json({

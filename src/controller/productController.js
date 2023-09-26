@@ -115,6 +115,18 @@ const recipeController = {
         users_id: req.body.users_id,
         category_id: req.body.category_id,
       };
+      if (
+        !product.name_product ||
+        !product.price ||
+        !product.color ||
+        !product.size ||
+        !product.stock ||
+        !product.condition ||
+        !product.image_product ||
+        !product.description
+      ) {
+        return res.status(400).json({ message: "Semua kolom harus diisi" });
+      }
       let productData = await createProductM(product);
       // console.log(product);
       res.status(200).json({
