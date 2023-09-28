@@ -23,10 +23,12 @@ CREATE TABLE
         stock VARCHAR(255),
         condition VARCHAR(255),
         image_product VARCHAR(255),
-        description VARCHAR(255),
+        description TEXT,
         users_id INT,
         category_id INT
     )
+
+DROP TABLE product 
 
 INSERT INTO
     product (
@@ -109,3 +111,18 @@ CREATE TABLE
         city VARCHAR(255),
         users_id INT
     )
+
+CREATE TABLE
+    order (
+        order_id SERIAL PRIMARY KEY,
+        order_size VARCHAR(255),
+        order_color VARCHAR(255),
+        quantity INT,
+        customer_id INT,
+        seller_id INT,
+        product_id INT,
+        address_id INT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )
+
+DROP TABLE order 

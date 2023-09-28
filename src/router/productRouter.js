@@ -19,7 +19,7 @@ router.get("/all", getAllProduct);
 router.get("/:product_id", getProductById);
 router.get("/users/:users_id", getByUsersId);
 router.get("/category/:category_id", getByCategoryId);
-router.post("/", auth, isSeller, uploadProduct, createProduct);
+router.post("/", uploadProduct, createProduct);
 router.put("/:product_id", uploadProduct, updateProduct);
 router.delete("/:product_id", deleteProduct);
 

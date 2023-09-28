@@ -61,12 +61,12 @@ const sellerController = {
     try {
       const seller_id = req.params.seller_id;
       const result = await getSellerId(seller_id);
-      res.json({
+      res.status(200).json({
         data: result.rows[0],
         message: "get data successfully",
       });
     } catch (err) {
-      res.json({
+      res.status(400).json({
         error: err.message,
         message: "error getting user",
       });
