@@ -2,8 +2,15 @@ const db = require("../config/db");
 
 const productQuery = (data) => {
   let { searchBy, search, sortBy, sort, limit, offset } = data;
-  return db.query(`SELECT * 
-    FROM product WHERE product.${searchBy} ILIKE '%${search}%' ORDER BY product.${sortBy} ${sort} LIMIT ${limit} OFFSET ${offset}`);
+  return db.query(`SELECT 
+  product.*, 
+  seller.store_name  
+FROM 
+  product
+LEFT JOIN 
+  seller
+ON 
+  product.users_id = seller.seller_id WHERE product.${searchBy} ILIKE '%${search}%' ORDER BY product.${sortBy} ${sort} LIMIT ${limit} OFFSET ${offset}`);
 };
 
 const allProduct = () => {
@@ -45,13 +52,14 @@ WHERE
 const getProductByCategoryId = (category_id) => {
   return db.query(`SELECT 
   product.*, 
-  category.name_category
+  category.name_category,
+  seller.store_name
 FROM 
   product
 LEFT JOIN 
-  category
-ON 
-  product.category_id = category.category_id
+  category ON product.category_id = category.category_id
+LEFT JOIN
+  seller ON product.users_id = seller.seller_id
 WHERE 
   product.category_id = ${category_id};`);
 };
@@ -114,6 +122,10 @@ const deleteProductM = (product_id) => {
     `DELETE FROM product WHERE product.product_id = ${product_id}`
   );
 };
+
+const countData = () => {
+  return db.query("SELECT COUNT(*) FROM product");
+};
 module.exports = {
   productQuery,
   allProduct,
@@ -123,4 +135,5 @@ module.exports = {
   createProductM,
   updateProductM,
   deleteProductM,
+  countData,
 };

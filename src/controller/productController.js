@@ -7,23 +7,40 @@ const {
   createProductM,
   updateProductM,
   deleteProductM,
+  countData,
 } = require("../model/productModel");
 const cloudinary = require("../config/cloudinaryConfig");
 const recipeController = {
   getProductQuery: async (req, res) => {
-    let { searchBy, search, sortBy, sort, limit, offset } = req.query;
+    let { searchBy, search, sortBy, sort, limit, offset, page } = req.query;
     let data = {
+      page: page || 1,
       searchBy: searchBy || "name_product",
       search: search || "",
-      sortBy: sortBy || "name_product",
+      sortBy: sortBy || "product_id",
       sort: sort || "ASC",
-      limit: limit || 15,
-      offset: offset || 0,
+      limit: limit || 1,
+      offset: (page - 1) * limit || 0,
     };
+
     try {
+      const {
+        rows: [count],
+      } = await countData();
+      const totalData = parseInt(count.count);
+
+      const totalPage = Math.ceil(totalData / limit);
+      // console.log(limit);
+      const pagination = {
+        currentPage: data.page,
+        limit: data.limit,
+        totalData: totalData,
+        totalPage: totalPage,
+      };
       let results = await productQuery(data);
       res.status(200).json({
         message: "product got by query",
+        pagination: pagination,
         data: results.rows,
       });
     } catch (err) {
@@ -142,19 +159,18 @@ const recipeController = {
   },
 
   updateProduct: async (req, res) => {
-    let product_id = req.params.product_id;
-    let productImage = await cloudinary.uploader.upload(
-      req.file && req.file?.path,
-      {
-        folder: "product",
-      }
-    );
-
-    if (!productImage) {
-      return res.json({ messsage: "need upload image" });
-    }
-
     try {
+      let product_id = req.params.product_id;
+      let productImage = await cloudinary.uploader.upload(
+        req.file && req.file?.path,
+        {
+          folder: "product",
+        }
+      );
+
+      if (!productImage) {
+        return res.json({ messsage: "need upload image" });
+      }
       let product = await getProductId(Number(product_id));
       let data = product.rows[0];
       // console.log(data);
