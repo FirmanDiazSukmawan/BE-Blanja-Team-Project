@@ -113,7 +113,7 @@ CREATE TABLE
     )
 
 CREATE TABLE
-    order (
+    orders (
         order_id SERIAL PRIMARY KEY,
         order_size VARCHAR(255),
         order_color VARCHAR(255),
