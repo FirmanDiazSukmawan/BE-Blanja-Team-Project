@@ -72,6 +72,7 @@ const customerController = {
       });
     }
   },
+  
   createCustomer: async (req, res) => {
     try {
       const { name, email, password } = req.body;
@@ -96,10 +97,11 @@ const customerController = {
           email: email || "",
           password: hash,
         };
-        // console.log(user);
+        console.log(user);
 
         try {
           const userData = await createCustomerM(user);
+          console.log(userData);
           res.status(200).json({
             message: "Customer has been created successfully",
             data: userData,

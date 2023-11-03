@@ -1,4 +1,4 @@
--- Active: 1692600013165@@localhost@5432@blanja_db
+-- Active: 1693398029625@@localhost@5432@db_blanja
 
 CREATE TABLE
     seller (
@@ -60,9 +60,7 @@ CREATE TABLE
     category (
         category_id SERIAL PRIMARY KEY,
         name_category VARCHAR(255) NOT NULL,
-        image VARCHAR (255),
-        users_id INT,
-        product_id INT
+        image VARCHAR (255)
     )
 
 CREATE TABLE
@@ -100,6 +98,7 @@ VALUES (
         'Customer'
     );
 
+
 CREATE TABLE
     addres(
         addres_id SERIAL PRIMARY KEY,
@@ -121,8 +120,22 @@ CREATE TABLE
         customer_id INT,
         seller_id INT,
         product_id INT,
-        address_id INT,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        addres_id INT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        status VARCHAR(255)
     )
 
-DROP TABLE order 
+DROP TABLE addres
+
+DROP TABLE category 
+
+DROP TABLE customer
+
+DROP TABLE orders
+
+DROP TABLE product
+
+DROP TABLE seller 
+
+INSERT INTO addres(home_addres, recipients_name, phone, addres, postal_code, city, users_id)
+VALUES ('123 Main St', 'John Doe', '123-456-7890', '123 Main St', 12345, 'Jakarta', 1);
