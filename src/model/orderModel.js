@@ -72,6 +72,34 @@ const deleteOrderM = (order_id) => {
   return db.query(`DELETE FROM orders WHERE orders.order_id = ${order_id}`);
 };
 
+const orderStatus = (customer_id) => {
+  const status = "unpaid";
+  return db.query(
+    `UPDATE orders SET status = '${status}' WHERE orders.customer_id = ${customer_id}`
+  );
+};
+
+const updateStatus = (customer_id) => {
+  const status = "paid";
+  return db.query(
+    `UPDATE orders SET status = '${status}' WHERE orders.customer_id = ${customer_id}`
+  );
+};
+
+const updateStatusDelivery = (seller_id) => {
+  const status = "on delivery";
+  return db.query(
+    `UPDATE orders SET status = '${status}' WHERE orders.seller_id = ${seller_id}`
+  );
+};
+
+const updateStatusDelivered = (customer_id) => {
+  const status = "delivered";
+  return db.query(
+    `UPDATE orders SET status = '${status}' WHERE orders.customer_id = ${customer_id}`
+  );
+};
+
 module.exports = {
   getOrderM,
   getOrderId,
@@ -80,4 +108,8 @@ module.exports = {
   createOrderM,
   updateOrderM,
   deleteOrderM,
+  orderStatus,
+  updateStatus,
+  updateStatusDelivery,
+  updateStatusDelivered,
 };

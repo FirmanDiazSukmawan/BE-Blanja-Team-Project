@@ -61,8 +61,6 @@ CREATE TABLE
         category_id SERIAL PRIMARY KEY,
         name_category VARCHAR(255) NOT NULL,
         image VARCHAR (255),
-        users_id INT,
-        product_id INT
     )
 
 CREATE TABLE
@@ -126,3 +124,6 @@ CREATE TABLE
     )
 
 DROP TABLE order 
+
+ALTER TABLE orders
+ADD status VARCHAR(255);
