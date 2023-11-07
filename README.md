@@ -1,21 +1,24 @@
-
 # Backend Blanja Website Team Project
 
 Backend repository of Blanja E-commerce
 
-
 ## Table of Contents
+
 - [Description](#Description)
 - [Project Structure](#Project)
-- [Screenshoots](#Screenshot)
-- [Framework](#Framework)
+- [Built With](#Built-With)
+- [Database Schema](#Database-Schema)
 - [Usage](#Usage)
 - [Screenshots](#Screenshots)
 - [Related Project](#Related-Project)
 - [Contributing](#Contributing)
+
 ## Description
+
 Blanja E-commerce Backend is the engine that powers our user-friendly platform, enabling seamless buying and selling experiences. It provides essential functionalities for sellers to list products, manage inventory, and engage with customers. Buyers can effortlessly browse products and make secure transactions, ensuring a smooth and enjoyable e-commerce journey.
+
 ## Project Structure
+
 ```
 |── Backend
    |── public                  # Public assets (images, etc.)
@@ -66,10 +69,11 @@ Blanja E-commerce Backend is the engine that powers our user-friendly platform, 
    |── README.md               # Project documentation for GitHub
 
 ```
-## Screenshots
+
 ## Built With
 
 Technologies Utilized:
+
 - Node.js: A scalable and event-driven JavaScript runtime for building high-performance applications.
 - Express.js: A minimal and flexible Node.js web application framework that provides a robust set of features for web and mobile applications. It simplifies the process of building efficient and scalable web APIs and applications.
 - PostgreSQL: A powerful open-source relational database system ensuring structured data storage and retrieval.
@@ -77,31 +81,41 @@ Technologies Utilized:
 - JSON Web Tokens (JWT): A secure method for authenticating and verifying the identity of users, ensuring data integrity.
 - Multer: Middleware for handling file uploads, essential for managing product images efficiently.
 
+## Database Schema
+
+
 ## Usage
 
 To use this project, follow these steps:
 
 1. **Clone This Repository**
+
    ```bash
-   git clone https://github.com/example/repository.git
-   cd repository
+   git clone https://github.com/xTats/BE-Blanja-Team-Project.git
+   cd BE-Blanja-Team-Project
    ```
 
 2. **Install Dependencies**
+
    ```bash
    npm install
    ```
 
 3. **Set Up Database**
+
    - Create a PostgreSQL database and note down the database name, username, password, and host.
 
 4. **Run the Server**
+
    ```bash
    npm start
    ```
 
-5. **API Endpoints**
-   - Access the API endpoints at `http://localhost:3000/api/endpoint`.
+5. **API Endpoint**
+  
+  API Enpoint are available in our postman documentation
+   
+   [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/29238474-b4c6395f-1116-4638-932a-90414dfce5d8?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D29238474-b4c6395f-1116-4638-932a-90414dfce5d8%26entityType%3Dcollection%26workspaceId%3Df8472dc0-395a-4836-8dea-9ca7e845a285)
 
 ## Related Project
 

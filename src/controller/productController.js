@@ -95,6 +95,8 @@ const recipeController = {
     }
   },
 
+  
+
   getByCategoryId: async (req, res) => {
     const category_id = req.params.category_id;
     try {
@@ -108,6 +110,7 @@ const recipeController = {
       });
     }
   },
+  
 
   createProduct: async (req, res) => {
     try {
@@ -202,6 +205,7 @@ const recipeController = {
       let product_id = req.params.product_id;
       const result = await deleteProductM(product_id);
       const data = await cloudinary.uploader.destroy(result);
+      console.log(product_id);
 
       res.status(200).json({
         message: "product deleted successfully",

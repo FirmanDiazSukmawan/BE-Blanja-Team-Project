@@ -6,6 +6,10 @@ const {
   createOrderM,
   updateOrderM,
   deleteOrderM,
+  orderStatus,
+  updateStatus,
+  updateStatusDelivery,
+  updateStatusDelivered,
 } = require("../model/orderModel");
 
 const orderController = {
@@ -112,6 +116,104 @@ const orderController = {
       res.status(400).json({
         error: err.message,
         message: "error updating order",
+      });
+    }
+  },
+
+  updateOrderStatus: async (req, res) => {
+    try {
+      let customer_id = req.params.customer_id;
+      let status = req.params.status;
+      let result = await getOrderCustomerId(customer_id);
+      // console.log(result.rows);
+      if (!result) {
+        return res.status(300).json({
+          message: "customer no have order",
+        });
+      }
+      const statusChange = await orderStatus(customer_id, status);
+      // console.log(statusChange);
+
+      return res
+        .status(200)
+        .json({ data: statusChange, message: "status change" });
+    } catch (err) {
+      return res.status(400).json({
+        err: err.message,
+        message: "customer no have order",
+      });
+    }
+  },
+
+  updateOrderStatusPaid: async (req, res) => {
+    try {
+      let customer_id = req.params.customer_id;
+      let status = req.params.status;
+      let result = await getOrderCustomerId(customer_id, status);
+      if (!result) {
+        return res.status(300).json({
+          message: "customer no have order",
+        });
+      }
+      const statusChange = await updateStatus(customer_id, status);
+
+      return res
+        .status(200)
+        .json({ data: statusChange, message: "status change" });
+    } catch (err) {
+      return res.status(400).json({
+        err: err.message,
+        message: "error paid please try again",
+      });
+    }
+  },
+
+  updateOrderStatusDelivery: async (req, res) => {
+    try {
+      let seller_id = req.params.seller_id;
+      // console.log(seller_id);
+      let customer_id = req.params.customer_id;
+      console.log(customer_id);
+      let status = req.params.status;
+      let result = await getOrderCustomerId(customer_id, status);
+      // console.log(result);
+      if (!result) {
+        return res.status(300).json({
+          message: "customer no have order",
+        });
+      }
+      const statusChange = await updateStatusDelivery(seller_id, result);
+
+      return res
+        .status(200)
+        .json({ data: statusChange, message: "status change" });
+    } catch (err) {
+      return res.status(400).json({
+        err: err.message,
+        message: "error change status to delivery",
+      });
+    }
+  },
+
+  updateOrderStatusDelivered: async (req, res) => {
+    try {
+      let customer_id = req.params.customer_id;
+      let status = req.params.status;
+      let result = await getOrderCustomerId(customer_id, status);
+      if (!result) {
+        return res.status(300).json({
+          message: "customer no have order",
+        });
+      }
+      const statusChange = await updateStatusDelivered(customer_id, status);
+
+      return res
+        .status(200)
+        .json({ data: statusChange, message: "status change" });
+    } catch (err) {
+      return res.status(400).json({
+        err: err.message,
+        message: "error paid please try again",
       });
     }
   },
