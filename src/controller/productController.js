@@ -19,7 +19,7 @@ const recipeController = {
       search: search || "",
       sortBy: sortBy || "product_id",
       sort: sort || "ASC",
-      limit: limit || 1,
+      limit: limit || 100,
       offset: (page - 1) * limit || 0,
     };
 
@@ -28,8 +28,9 @@ const recipeController = {
         rows: [count],
       } = await countData();
       const totalData = parseInt(count.count);
-
-      const totalPage = Math.ceil(totalData / limit);
+      // console.log(totalData);
+      const totalPage = Math.ceil(totalData / data.limit);
+      console.log(totalPage);
       // console.log(limit);
       const pagination = {
         currentPage: data.page,

@@ -75,6 +75,7 @@ const addresController = {
         city: req.body.city,
         users_id: req.body.users_id,
       };
+      console.log(req.body);
       if (
         !addres.home_addres ||
         !addres.recipients_name ||
