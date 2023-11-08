@@ -121,7 +121,7 @@ To use this project, follow these steps:
 ## Related Project
 
 Frontend repository of Blanja E-commerce, clone this for the complete set of features.
-[FE-Blanja-TeamProject](https://github.com/xTats/BE-Blanja-Team-Project)
+[FE-Blanja-TeamProject](https://github.com/xTats/FE-Blanja-TeamProject)
 
 ## Contributing
 
