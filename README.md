@@ -83,6 +83,7 @@ Technologies Utilized:
 
 ## Database Schema
 
+[Database schema for Blanja Project is described in the following file]("/query.sql)
 
 ## Usage
 
