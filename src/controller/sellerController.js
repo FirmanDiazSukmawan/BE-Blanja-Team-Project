@@ -139,7 +139,7 @@ const sellerController = {
         const PasswordValid = await bcrypt.compare(password, passwordHash);
         const user = result.rows[0];
 
-        // console.log(result);
+        console.log(result);
 
         if (PasswordValid) {
           const token = await generateToken({
@@ -158,7 +158,8 @@ const sellerController = {
         res.status(400).json({ message: "Invalid email or password " });
       }
     } catch (error) {
-      res.status(400).json({ error, message: "error during login" });
+      console.log(error);
+      res.status(400).json({ error: error, message: "error during login" });
     }
   },
 

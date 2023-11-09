@@ -184,7 +184,7 @@ const customerController = {
     } catch (error) {
       res.status(400).json({
         message: "Update Error",
-        error: error.message,
+        error: error,
       });
     }
   },

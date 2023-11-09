@@ -1,4 +1,4 @@
--- Active: 1693398029625@@localhost@5432@db_blanja
+-- Active: 1692600013165@@localhost@5432@blanja_db
 
 CREATE TABLE
     seller (

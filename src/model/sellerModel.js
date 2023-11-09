@@ -57,6 +57,7 @@ const loginSellerM = (email) => {
   return new Promise((resolve, reject) => {
     db.query(`SELECT * FROM seller WHERE email = '${email}'`, (err, res) => {
       if (err) return reject(err);
+
       resolve(res);
     });
   });
