@@ -5,6 +5,7 @@ const {
   updateAddresM,
   deleteAddresM,
   getAddresByUsersId,
+  getAddresUsersIdByAddresId,
 } = require("../model/addresModel");
 
 const addresController = {
@@ -56,6 +57,23 @@ const addresController = {
         .status(200)
         .json({ data: result.rows, message: "get succes byusersid" });
       console.log(result);
+    } catch (err) {
+      res.status(400).json({
+        error: err.message,
+        message: "error get product by users",
+      });
+    }
+  },
+
+  getAddresIdByUsersId: async (req, res) => {
+    const users_id = req.params.users_id;
+    const limit = req.query.limit || 1;
+    try {
+      const result = await getAddresUsersIdByAddresId(users_id, limit);
+      res
+        .status(200)
+        .json({ data: result.rows, message: "get succes byusersid" });
+      // console.log(result);
     } catch (err) {
       res.status(400).json({
         error: err.message,

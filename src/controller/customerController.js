@@ -72,7 +72,7 @@ const customerController = {
       });
     }
   },
-  
+
   createCustomer: async (req, res) => {
     try {
       const { name, email, password } = req.body;
@@ -153,7 +153,7 @@ const customerController = {
         res.status(400).json({ message: "Invalid email or password " });
       }
     } catch (error) {
-      res.status(400).json({ error, message: "error during login" });
+      res.status(500).json({ message: "error during login", error });
     }
   },
 

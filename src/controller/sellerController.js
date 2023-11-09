@@ -119,9 +119,10 @@ const sellerController = {
         }
       });
     } catch (err) {
-      res.status(400).json({
+      console.log(err);
+      res.status(500).json({
         message: "Error creating seller Catch",
-        err: err.message,
+        err: err,
       });
     }
   },

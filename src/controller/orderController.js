@@ -10,6 +10,7 @@ const {
   updateStatus,
   updateStatusDelivery,
   updateStatusDelivered,
+  getOrderByCustomedIdStatus,
 } = require("../model/orderModel");
 
 const orderController = {
@@ -72,6 +73,24 @@ const orderController = {
       res.json({
         error: err.message,
         message: "error getting order",
+      });
+    }
+  },
+
+  getOrderByCustomerIdByStatus: async (req, res) => {
+    try {
+      const customer_id = req.params.customer_id;
+      const status = String(req.params.status);
+      console.log(status);
+      const result = await getOrderByCustomedIdStatus(customer_id, status);
+      res.status(200).json({
+        message: "order has been found",
+        data: result.rows,
+      });
+    } catch (error) {
+      res.status(404).json({
+        message: "error getting order",
+        error: error.message,
       });
     }
   },
@@ -150,6 +169,7 @@ const orderController = {
       let customer_id = req.params.customer_id;
       let status = req.params.status;
       let result = await getOrderCustomerId(customer_id, status);
+      // console.log(result);
       if (!result) {
         return res.status(300).json({
           message: "customer no have order",
@@ -199,6 +219,7 @@ const orderController = {
     try {
       let customer_id = req.params.customer_id;
       let status = req.params.status;
+
       let result = await getOrderCustomerId(customer_id, status);
       if (!result) {
         return res.status(300).json({

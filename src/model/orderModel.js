@@ -48,6 +48,29 @@ orders.customer_id = ${customer_id}
 `);
 };
 
+const getOrderByCustomedIdStatus = (customer_id, status) => {
+  return db.query(
+    `SELECT
+  orders.*, 
+  product.name_product,product.image_product,product.price,addres.*
+FROM 
+  orders
+LEFT JOIN 
+  product
+ON 
+  orders.product_id = product.product_id
+LEFT JOIN 
+  addres
+ON 
+  orders.addres_id = addres.addres_id
+WHERE 
+orders.customer_id = ${customer_id} 
+AND
+orders.status = '${status}'
+`
+  );
+};
+
 const createOrderM = (data) => {
   const {
     order_size,
@@ -112,4 +135,5 @@ module.exports = {
   updateStatus,
   updateStatusDelivery,
   updateStatusDelivered,
+  getOrderByCustomedIdStatus,
 };

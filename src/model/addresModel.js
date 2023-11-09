@@ -14,6 +14,12 @@ const getAddresByUsersId = (users_id) => {
   return db.query(`SELECT * FROM addres WHERE addres.users_id =${users_id}`);
 };
 
+const getAddresUsersIdByAddresId = (users_id, limit) => {
+  return db.query(
+    `SELECT * FROM addres  WHERE addres.users_id =${users_id} LIMIT ${limit}`
+  );
+};
+
 const createAddresM = (data) => {
   const {
     home_addres,
@@ -48,4 +54,5 @@ module.exports = {
   createAddresM,
   updateAddresM,
   deleteAddresM,
+  getAddresUsersIdByAddresId,
 };

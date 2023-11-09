@@ -12,12 +12,14 @@ const {
   updateOrderStatusPaid,
   updateOrderStatusDelivery,
   updateOrderStatusDelivered,
+  getOrderByCustomerIdByStatus,
 } = require("../controller/orderController");
 
 router.get("/", getOrder);
 router.get("/:order_id", getOrderById);
 router.get("/seller/:seller_id", getOrderBySellerId);
 router.get("/customer/:customer_id", getOrderByCustomerId);
+router.get("/:customer_id/:status", getOrderByCustomerIdByStatus);
 router.post("/", createOrder);
 router.put("/:order_id", updateOrder);
 router.patch("/status/:customer_id", updateOrderStatus);
