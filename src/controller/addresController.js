@@ -21,12 +21,12 @@ const addresController = {
     };
     try {
       let result = await getAddresM(data);
-      res.json({
+      res.status(200).json({
         message: "get addres successfully ",
         data: result.rows,
       });
     } catch (err) {
-      res.json({
+      res.status(400).json({
         error: err.message,
         message: "error get addres",
       });
@@ -37,12 +37,12 @@ const addresController = {
     const addres_id = req.params.addres_id;
     let result = await getAddresId(addres_id);
     try {
-      res.json({
+      res.status(200).json({
         message: "addres has been found",
         data: result.rows,
       });
     } catch (err) {
-      res.json({
+      res.status(400).json({
         error: err.message,
         message: "error getting addres",
       });

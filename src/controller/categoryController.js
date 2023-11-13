@@ -20,12 +20,12 @@ const categoryController = {
     };
     try {
       let result = await getCategoryM(data);
-      res.json({
+      res.status(200).json({
         message: "get Category successfully ",
         data: result.rows,
       });
     } catch (err) {
-      res.json({
+      res.status(400).json({
         error: err.message,
         message: "error get category",
       });
@@ -36,12 +36,12 @@ const categoryController = {
     const category_id = req.params.category_id;
     let result = await getCategoryId(category_id);
     try {
-      res.json({
+      res.status(200).json({
         message: "category has been found",
         data: result.rows,
       });
     } catch (err) {
-      res.json({
+      res.status(400).json({
         error: err.message,
         message: "error getting category",
       });

@@ -17,12 +17,12 @@ const orderController = {
   getOrder: async (req, res) => {
     try {
       let result = await getOrderM();
-      res.json({
+      res.status(200).json({
         message: "get order successfully ",
         data: result.rows,
       });
     } catch (err) {
-      res.json({
+      res.status(400).json({
         error: err.message,
         message: "error get order",
       });
@@ -33,12 +33,12 @@ const orderController = {
     const order_id = req.params.order_id;
     let result = await getOrderId(order_id);
     try {
-      res.json({
+      res.status(200).json({
         message: "order has been found",
         data: result.rows,
       });
     } catch (err) {
-      res.json({
+      res.status(400).json({
         error: err.message,
         message: "error getting order",
       });
@@ -49,12 +49,12 @@ const orderController = {
     const seller_id = req.params.seller_id;
     let result = await getOrderSellerId(seller_id);
     try {
-      res.json({
+      res.status(200).json({
         message: "order has been found",
         data: result.rows,
       });
     } catch (err) {
-      res.json({
+      res.status(400).json({
         error: err.message,
         message: "error getting order",
       });
@@ -65,12 +65,12 @@ const orderController = {
     try {
       const customer_id = req.params.customer_id;
       let result = await getOrderCustomerId(customer_id);
-      res.json({
+      res.status(200).json({
         message: "order has been found",
         data: result.rows,
       });
     } catch (err) {
-      res.json({
+      res.status(400).json({
         error: err.message,
         message: "error getting order",
       });

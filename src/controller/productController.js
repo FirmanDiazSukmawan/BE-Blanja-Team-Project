@@ -55,12 +55,12 @@ const recipeController = {
   getAllProduct: async (req, res) => {
     try {
       let result = await allProduct();
-      res.json({
+      res.status(200).json({
         message: "get All Product Succesfuly",
         data: result.rows,
       });
     } catch (err) {
-      res.json({
+      res.status(400).json({
         error: err.message,
         message: "Error Getting Product",
       });

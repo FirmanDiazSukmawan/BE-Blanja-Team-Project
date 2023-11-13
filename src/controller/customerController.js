@@ -61,12 +61,12 @@ const customerController = {
     try {
       const customer_id = req.params.customer_id;
       const result = await getCustomerId(customer_id);
-      res.json({
+      res.status(200).json({
         data: result.rows[0],
         message: "get data successfully",
       });
     } catch (err) {
-      res.json({
+      res.status(400).json({
         error: err.message,
         message: "error getting user",
       });
@@ -194,12 +194,12 @@ const customerController = {
       const customer_id = req.params.customer_id;
       const result = await deleteCustomerM(customer_id);
       const data = await cloudinary.uploader.destroy(result);
-      res.json({
+      res.status(200).json({
         message: "delete data sucessfully",
         data: `id ${data} has been deleted`,
       });
     } catch (err) {
-      res.json({
+      res.status(400).json({
         error: err.message,
         message: "error deleting data",
       });
